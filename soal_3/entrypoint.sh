@@ -59,29 +59,78 @@ chmod 777 /libraryit.log
 (
 tail -F /tmp/samba.log | while read line
 do
-    TIMESTAMP=$(date "+[%Y-%m-%d  %H:%M:%S]")
+
+    ########################################
+    # FILTER FULL_AUDIT ONLY
+    ########################################
+
+    if ! echo "$line" | grep -q "|"; then
+        continue
+    fi
 
     USER=$(echo "$line" | cut -d'|' -f1)
     SHARE=$(echo "$line" | cut -d'|' -f2)
 
+    ########################################
+    # VALIDASI USER
+    ########################################
+
+    if [[ "$USER" != "member" &&
+          "$USER" != "contributor" &&
+          "$USER" != "librarian" ]]; then
+        continue
+    fi
+
+    TIMESTAMP=$(date "+[%Y-%m-%d  %H:%M:%S]")
+
+    ########################################
+    # CONNECT
+    ########################################
+
     if echo "$line" | grep -qi "connect"; then
         LEVEL="INFO"
         ACTION="CONNECT"
+        TARGET="$SHARE"
+
+    ########################################
+    # DISCONNECT
+    ########################################
+
+    elif echo "$line" | grep -qi "disconnect"; then
+        LEVEL="INFO"
+        ACTION="DISCONNECT"
+        TARGET="$SHARE"
+
+    ########################################
+    # WRITE
+    ########################################
 
     elif echo "$line" | grep -qi "write"; then
         LEVEL="INFO"
         ACTION="WRITE"
 
-    elif echo "$line" | grep -qi "disconnect"; then
-        LEVEL="INFO"
-        ACTION="DISCONNECT"
+        FILE=$(echo "$line" | awk -F'|' '{print $NF}')
 
-    else
+        if [ -z "$FILE" ]; then
+            TARGET="$SHARE"
+        else
+            TARGET="$FILE"
+        fi
+
+    ########################################
+    # DENIED
+    ########################################
+
+    elif echo "$line" | grep -qi "denied"; then
         LEVEL="WARNING"
         ACTION="DENIED"
+        TARGET="$SHARE"
+
+    else
+        continue
     fi
 
-    echo "$TIMESTAMP  [$LEVEL]  [$USER]  [$ACTION]  [$SHARE]" >> /libraryit.log
+    echo "$TIMESTAMP  [$LEVEL]  [$USER]  [$ACTION]  [$TARGET]" >> /libraryit.log
 
 done
 ) &

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  libraryit-server:
+    build: .
+    container_name: libraryit-server
+
+    ports:
+      - "1445:445"
+
+    volumes:
+      - ./data/ebooks:/libraryit/ebooks
+      - ./data/papers:/libraryit/papers
+      - ./data/docs:/libraryit/docs
+      - ./data/sourcecode:/libraryit/sourcecode
+      - ./logs/libraryit.log:/libraryit.log
+
+    restart: always
+
+  libraryit-logger:
+    image: alpine
+
+    depends_on:
+      - libraryit-server
+
+    volumes:
+      - ./logs/libraryit.log:/libraryit.log
+
+    command: sh -c "tail -F /libraryit.log"
+

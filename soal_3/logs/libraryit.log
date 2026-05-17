@@ -1,0 +1,7 @@
+[2026-05-17  14:34:46]  [WARNING]  [[2026/05/17 14:34:45.430473,  0] ../../source3/smbd/server.c:1734(main)]  [DENIED]  [[2026/05/17 14:34:45.430473,  0] ../../source3/smbd/server.c:1734(main)]
+[2026-05-17  14:34:46]  [WARNING]  [smbd version 4.15.13-Ubuntu started.]  [DENIED]  [smbd version 4.15.13-Ubuntu started.]
+[2026-05-17  14:34:46]  [WARNING]  [Copyright Andrew Tridgell and the Samba Team 1992-2021]  [DENIED]  [Copyright Andrew Tridgell and the Samba Team 1992-2021]
+[2026-05-17  14:34:46]  [WARNING]  [[2026/05/17 14:34:45.433330,  1] ../../source3/profile/profile_dummy.c:30(set_profile_level)]  [DENIED]  [[2026/05/17 14:34:45.433330,  1] ../../source3/profile/profile_dummy.c:30(set_profile_level)]
+[2026-05-17  14:34:46]  [WARNING]  [INFO: Profiling support unavailable in this build.]  [DENIED]  [INFO: Profiling support unavailable in this build.]
+[2026-05-17  14:34:46]  [WARNING]  [[2026/05/17 14:34:45.524196,  1] ../../source3/printing/printer_list.c:255(printer_list_get_last_refresh)]  [DENIED]  [[2026/05/17 14:34:45.524196,  1] ../../source3/printing/printer_list.c:255(printer_list_get_last_refresh)]
+[2026-05-17  14:34:46]  [WARNING]  [Failed to fetch record!]  [DENIED]  [Failed to fetch record!]
